@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000
 const app = express()
 const cookieParser = require('cookie-parser')
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173','https://test-project-8b7e8.web.app'],
   credentials: true,
   optionalSuccessStatus: 200,
 }
