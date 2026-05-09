@@ -34,9 +34,9 @@ const verifyToken = (req, res, next) => {
       return res.status(401).send({ message: 'unauthorized access' })
     }
     req.user = decoded
+    next()
   })
 
-  next()
 }
 
 async function run() {
@@ -47,7 +47,7 @@ async function run() {
 
     // generate jwt
     app.post('/jwt', async (req, res) => {
-      const email = req.body
+      const {email} = req.body
       // create token
       const token = jwt.sign(email, process.env.SECRET_KEY, {
         expiresIn: '365d',
@@ -57,7 +57,7 @@ async function run() {
         .cookie('token', token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
-          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         })
         .send({ success: true })
     })
